@@ -1,14 +1,14 @@
-#0x16. C - Simple Shell
-#Group Project
+# 0x16. C - Simple Shell
+# Group Project
 
-#Scope:
+# Scope:
 -Basics of programming
 -Basics of C
 -Basics of thinking like an engineer
 -Group work
 -Learning how to learn
 
-#Objective:
+# Objective:
 -To know;
 -Who designed and implemented the original Unix operating system
 -Who wrote the first version of the UNIX shell
@@ -25,4 +25,4 @@
 -How to suspend the execution of a process until one of its children terminates
 -What is EOF / “end-of-file”?
 
-#History:
+# History:
