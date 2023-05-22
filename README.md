@@ -26,6 +26,6 @@
 -What is EOF / “end-of-file”?
 
 # History:
--Added in the _putchar function to the project"\n"
--Created the project header file called "shell.h\n"
--Added in the function prototype for _putchar to the header file."\n"
+-Added in the _putchar function to the project  
+-Created the project header file called "shell.h"  
+-Added in the function prototype for _putchar to the header file.  
