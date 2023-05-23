@@ -26,7 +26,6 @@
 -What is EOF / “end-of-file”?
 
 # History:
-<<<<<<< HEAD
     1  cd simple_shell
     2  ls
     3  emacs 1-builtin.c
@@ -63,8 +62,3 @@
    34  emacs getline.c
    35  gcc -Wall -Werror -Wextra -pedantic -std=gnu89 getline.c -o hsh
    36  history
-=======
--Added in the _putchar function to the project  
--Created the project header file called "shell.h"  
--Added in the function prototype for _putchar to the header file.  
->>>>>>> 8cc08f4dabec802dc74f00b038e7f2a35452d8e4

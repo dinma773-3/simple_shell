@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* shell.h */
 
 #ifndef SHELL_H
@@ -125,7 +124,7 @@ char *_strcat(char *, char *);
 char *_strcpy(char *, char *);
 char *_strdup(const char *);
 void _puts(char *);
-int _putchar(char);
+int _putchar(char c);
 char *_strncpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
@@ -185,9 +184,3 @@ int replace_vars(info_t *);
 int replace_string(char **, char *);
 
 #endif /* SHELL_H */
-=======
-#ifndef SHELL_H
-#define SHELL_H
-int _putchar(char c);
-#endif
->>>>>>> 8cc08f4dabec802dc74f00b038e7f2a35452d8e4
