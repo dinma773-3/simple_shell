@@ -62,4 +62,3 @@
    34  emacs getline.c
    35  gcc -Wall -Werror -Wextra -pedantic -std=gnu89 getline.c -o hsh
    36  history
-
