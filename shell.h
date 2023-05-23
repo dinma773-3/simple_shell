@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* shell.h */
 
 #ifndef SHELL_H
@@ -184,3 +185,9 @@ int replace_vars(info_t *);
 int replace_string(char **, char *);
 
 #endif /* SHELL_H */
+=======
+#ifndef SHELL_H
+#define SHELL_H
+int _putchar(char c);
+#endif
+>>>>>>> 8cc08f4dabec802dc74f00b038e7f2a35452d8e4
