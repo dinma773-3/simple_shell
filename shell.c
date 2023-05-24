@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <errno.h>
+#include <sys/wait.h>
 
 /**
  * hsh - primary loop of the shell
@@ -8,39 +9,48 @@
  *
  * Return: 0 on success, 1 on error, or error code
  */
+
 int hsh(info_t *info, char **av)
 {
   ssize_t i = 0;
   int builtin = 0;
 
   while (i != -1 && builtin != -2)
+  {
+    clear_info(info);
+    if (interactive(info))
     {
-      clear_info(info);
-      if (interactive(info))
-	_puts("$ ");
-       	_eputchar(BUF_FLUSH);
-	i = get_input(info);
-	if (i != -1)
-	  {
-	    set_info(info, av);
-	    builtin = find_builtin(info);
-	    if (builtin == -1)
-	      find_cmd(info);
-	  }
-	else if (interactive(info))
-	  _putchar('\n');
-	free_info(info, 0);
+      _puts("$ ");
+      _eputchar(BUFF_FLUSH);
     }
+    i = get_input(info);
+    if (i != -1)
+    {
+      set_info(info, av);
+      builtin = find_builtin(info);
+      if (builtin == -1)
+        find_cmd(info);
+    }
+    else if (interactive(info))
+    {
+      _putchar('\n');
+    }
+    free_info(info, 0);
+  }
+
   write_history(info);
   free_info(info, 1);
+  
   if (!interactive(info) && info->status)
     exit(info->status);
+  
   if (builtin == -2)
-    {
-      if (info->err_num == -1)
-	exit(info->status);
-      exit(info->err_num);
-    }
+  {
+    if (info->err_num == -1)
+      exit(info->status);
+    exit(info->err_num);
+  }
+  
   return (builtin);
 }
 

@@ -12,6 +12,7 @@
 int is_cmd(info_t *info, char *path)
 {
   struct stat st;
+  (void)info;
 
   if (!path || stat(path, &st))
     return 0;
@@ -30,10 +31,15 @@ int is_cmd(info_t *info, char *path)
  *
  * Return: pointer to buffer containing the duplicated characers
  */
+
 char *dup_chars(char *pathstr, int start, int stop)
 {
-  char buffer[1024];
+  int length = stop - start;
+  char *buffer = malloc((length + 1) * sizeof(char));
   int i = 0, j = 0;
+
+  if (buffer == NULL)
+    return NULL;
 
   for (i = start; i < stop; i++)
   {
