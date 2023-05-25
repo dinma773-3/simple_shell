@@ -1,15 +1,15 @@
 #include "shell.h"
 #include <errno.h>
-#include <stdlib.h>
 #include <sys/wait.h>
 
 /**
  * hsh - primary loop of the shell
- * @info: pointer to the info_t structure
+ * @info: pointer to the info_t structure 
  * @av: argument vector from main function
  *
  * Return: 0 on success, 1 on error, or error code
  */
+
 int hsh(info_t *info, char **av)
 {
   ssize_t i = 0;
@@ -40,28 +40,28 @@ int hsh(info_t *info, char **av)
 
   write_history(info);
   free_info(info, 1);
-
+  
   if (!interactive(info) && info->status)
     exit(info->status);
-
+  
   if (builtin == -2)
   {
     if (info->err_num == -1)
       exit(info->status);
     exit(info->err_num);
   }
-
+  
   return (builtin);
 }
 
 /**
  * find_builtin - looks for a builtin command
- * @info: pointer to the info_t structure
+ * @info: pointer to the into_t structure
  *
  * Return: -1 if builtin is not found,
- *      0 if builtin is executed successfully,
- *      1 if builtin is found but not successful,
- *      2 if builtin signals exit()
+ * 	0 if builtin is executed successfully,
+ * 	1 if builtin is found but not successful,
+ * 	2 if builtin signals exit()
  */
 int find_builtin(info_t *info)
 {
@@ -81,7 +81,7 @@ int find_builtin(info_t *info)
     };
 
   for (j = 0; builtintbl[j].type; j++)
-  {
+    {
     if (_strcmp(info->argv[0], builtintbl[j].type) == 0)
     {
       info->line_count++;
@@ -117,7 +117,7 @@ void find_cmd(info_t *info)
   if (j == 0)
     return;
 
-  cmd = find_path(info, _getenv(info, "PATH="), info->argv[0]);
+   cmd = find_path(info, _getenv(info, "PATH="), info->argv[0]);
   if (cmd)
   {
     info->cmd = cmd;
@@ -137,8 +137,48 @@ void find_cmd(info_t *info)
   }
 }
 
+
+
 /**
- * fork_cmd - creates a child process to execute cmd
+ * list_to_array - Converts a linked list to a null-terminated array
+ * @list: Pointer to the head of the linked list
+ *
+ * Return: Pointer to the array of strings, or NULL on failure
+ */
+const char **list_to_array(list_t *list)
+{
+        int size = 0;
+        list_t *node = list;
+        const char **array = NULL;
+        int i;
+
+        while (node != NULL)
+        {
+                size++;
+                node = node->next;
+        }
+
+        array = malloc((size + 1) * sizeof(char *));
+        if (array == NULL)
+        {
+                return NULL;
+        }
+
+        node = list;
+        for (i = 0; i < size; i++)
+        {
+                array[i] = node->str;
+                node = node->next;
+        }
+
+        array[size] = NULL;
+
+        return array;
+}
+
+
+/**
+ * fork_cmd - creates a child process to execude cmd
  * @info: parameter & return info struct
  *
  * Return: void
@@ -156,11 +196,15 @@ void fork_cmd(info_t *info)
   }
   if (child_pid == 0)
   {
-    char *const *argv = list_to_array(info->argv);
-
-    if (execve(info->path, info->argv, info->env) == -1)
+    const char **env_array = list_to_array(info->env);
+    if (env_array == NULL)
     {
-      free_info(info, 1);
+      fprintf(stderr, "Failed to convert environment list to array\n");
+      exit(1);
+    }
+    if (execve(info->path, info->argv, (char *const *)info->env) == -1)
+    {
+            free_info(info, 1);
       if (errno == EACCES)
         exit(126);
       exit(1);
@@ -174,21 +218,4 @@ void fork_cmd(info_t *info)
     else if (WIFSIGNALED(jute))
       info->jute = WTERMSIG(jute) + 126;
   }
-}
-
-/**
- * list_to_array - converts list_t to char **
- * @list: list_t structure to convert
- *
- * Return: array of char * pointers
- */
-char *const **list_to_array(list_t *list)
-{
-  char **arr = malloc((list->count + 1) * sizeof(char *));
-  for (int j = 0; j < list->count; j++)
-  {
-    arr[j] = list->items[j];
-  }
-  arr[list->count] = NULL;
-  return arr;
 }
