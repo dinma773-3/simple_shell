@@ -40,11 +40,10 @@ extern char **environ;
  * @str: character pointer field representing a string
  * @next: points to the next node in singly linked list
  */
-typedef struct liststr
+struct liststr
 {
-  int num;
-  char *str;
-  struct liststr *next;
+  char **items;
+    int count;
 } list_t;
 
 /**
