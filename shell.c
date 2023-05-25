@@ -137,6 +137,46 @@ void find_cmd(info_t *info)
   }
 }
 
+
+
+/**
+ * list_to_array - Converts a linked list to a null-terminated array
+ * @list: Pointer to the head of the linked list
+ *
+ * Return: Pointer to the array of strings, or NULL on failure
+ */
+const char **list_to_array(list_t *list)
+{
+        int size = 0;
+        list_t *node = list;
+        const char **array = NULL;
+        int i;
+
+        while (node != NULL)
+        {
+                size++;
+                node = node->next;
+        }
+
+        array = malloc((size + 1) * sizeof(char *));
+        if (array == NULL)
+        {
+                return NULL;
+        }
+
+        node = list;
+        for (i = 0; i < size; i++)
+        {
+                array[i] = node->str;
+                node = node->next;
+        }
+
+        array[size] = NULL;
+
+        return array;
+}
+
+
 /**
  * fork_cmd - creates a child process to execude cmd
  * @info: parameter & return info struct
@@ -156,7 +196,13 @@ void fork_cmd(info_t *info)
   }
   if (child_pid == 0)
   {
-    if (execve(info->path, info->argv, info->env) == -1)
+    const char **env_array = list_to_array(info->env);
+    if (env_array == NULL)
+    {
+      fprintf(stderr, "Failed to convert environment list to array\n");
+      exit(1);
+    }
+    if (execve(info->path, info->argv, (char *const *)info->env) == -1)
     {
             free_info(info, 1);
       if (errno == EACCES)
