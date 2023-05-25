@@ -156,7 +156,7 @@ current = next;
  * This function checks if the given command string is part of a command chain
  * (e.g., command1 || command2, command1 && command2, command1 ; command2).
  * It updates the index to point to the position where the command chain ends.
- * Returns 1 if it is a command chain, 0 otherwise.
+ * Returns: 1 if it is a command chain, 0 otherwise.
  */
 int is_chain(info_t *info, char *cmd, size_t *index)
 {

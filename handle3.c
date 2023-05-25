@@ -68,6 +68,12 @@ return -1;
 return 0;
 }
 
+/**
+ * replace_vars - Replaces environment variables in a command with their values
+ * @info: Structure containing potential arguments
+ *
+ * Return: 0 on success, 1 on error
+ */
 int replace_vars(info_t *info)
 {
     char *cmd;
